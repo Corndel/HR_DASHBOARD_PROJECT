@@ -1,0 +1,8 @@
+review_id,employee_id,review_period,performance_rating,performance_score,reviewer_role
+R001,E001,Q1 2024,Excellent,5,Manager
+R002,E001,Q3 2024,Good,4,Manager
+R003,E002,Q2 2024,Good,4,Manager
+R004,E003,2024-Q1,Average,3,HR
+R005,E004,Q4 2023,Poor,2,Manager
+R006,E005,Q2 2024,Excellent,5,Manager
+R007,E006,Q3 2024,Good,4,HR

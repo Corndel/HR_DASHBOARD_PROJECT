@@ -1,0 +1,9 @@
+employee_id,first_name,last_name,gender,department,job_role,employment_type,location,join_date,employment_status
+E001,Aisha,Khan,Female,IT,Data Analyst,Full-Time,London,2021-03-15,Active
+E002,Daniel,Okoye,Male,Finance,Accountant,Full-Time,Manchester,,Active
+E003,Mei,Lin,Female,HR,HR Advisor,Part-Time,Birmingham,2019-11-20,Active
+E004,Carlos,Ramirez,Male,Operations,Operations Manager,Full-Time,London,2018-06-10,On leave
+E005,Sarah,Johnson,Female,IT,Software Engineer,Full-Time,Leeds,2022-01-05,Active
+E006,Ahmed,Hassan,Male,Finance,Financial Analyst,Contractor,London,2021-09-30,Unknown
+E007,Priya,Patel,Female,HR,Recruitment Officer,Full-Time,Leicester,2020-02-14,Active
+E008,Tom,Wilson,Male,Operations,Logistics Coordinator,Full-Time,Sheffield,,Active

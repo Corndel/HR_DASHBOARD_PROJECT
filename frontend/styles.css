@@ -1,0 +1,148 @@
+/* Basic page styling */
+body {
+  background-color: #f5f7fa;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  color: #333;
+}
+
+/* Header styles */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 3rem;
+  color: #004080;
+}
+#kpis {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+.kpi-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+  width: 22%;
+  text-align: center;
+}
+
+.kpi-card h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #007acc;
+}
+
+.kpi-card p {
+  font-size: 1.1rem;
+  color: #666;
+}
+.chart-container {
+  width: 45%;
+  margin: 0 2.5%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+
+
+#filters {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#department-filter {
+  padding: 6px 12px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+
+#department-filter {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1.5px solid #007acc; /* SAP blue-ish */
+  border-radius: 6px;
+  background-color: #f9faff;
+  color: #003366;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+#department-filter:hover, #department-filter:focus {
+  border-color: #004a99;
+  outline: none;
+  background-color: #e6f0ff;
+}
+
+.info-tooltip {
+  margin-left: 6px;
+  font-size: 20px; /* bigger icon */
+  cursor: help;
+  color: #007acc;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .dashboard {
+    padding: 10px;
+  }
+
+  .kpi {
+    flex: 1 1 100%; /* KPIs stack vertically on small screens */
+  }
+
+  .charts {
+    flex-direction: column; /* Stack charts vertically */
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+
+
+.info-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 6px;
+  color: #007acc;
+  font-weight: bold;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 220px;
+  background-color: #007acc;
+  color: #fff;
+  text-align: left;
+  padding: 8px;
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 12px;
+}
+
+.info-tooltip:hover .tooltip-text {
+  visibility: visible;
+}

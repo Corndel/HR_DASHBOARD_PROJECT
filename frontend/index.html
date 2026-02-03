@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Analytics Dashboard</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>HR Analytics Dashboard</h1>
+    <p>Overview of workforce metrics and training performance</p>
+  </header>
+
+  <!-- FILTERS -->
+  <section class="filters">
+    <label for="department-filter">Department:</label>
+    <select id="department-filter">
+      <option value="All">All</option>
+      <option value="IT">IT</option>
+      <option value="Finance">Finance</option>
+      <option value="HR">HR</option>
+      <option value="Operations">Operations</option>
+      <option value="Sales">Sales</option>
+    </select>
+  </section>
+
+  <!-- KPI SECTION -->
+  <section id="kpis">
+    <div class="kpi">
+      <span class="kpi-value" id="total-employees">0</span>
+      <span class="kpi-label">Total Employees</span>
+      <span class="info-tooltip" title="Number of employees in the selected department.">ℹ️</span>
+    </div>
+
+    <div class="kpi">
+      <span class="kpi-value" id="avg-satisfaction">0</span>
+      <span class="kpi-label">Avg Satisfaction</span>
+      <span class="info-tooltip" title="Average employee satisfaction score (1–10).">ℹ️</span>
+    </div>
+
+    <div class="kpi">
+      <span class="kpi-value" id="training-rate">0%</span>
+      <span class="kpi-label">Training Completion</span>
+      <span class="info-tooltip" title="Percentage of employees who completed required training.">ℹ️</span>
+    </div>
+
+
+
+
+
+  </section>
+
+  <!-- CHARTS -->
+  <section class="charts">
+
+    <div class="chart-container">
+      <h3>Employees by Department</h3>
+      <canvas id="employee-department-chart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h3>Training Completion Status</h3>
+      <canvas id="training-completion-chart"></canvas>
+    </div>
+
+  </section>
+
+
+
+  <section id="kpis">
+  <div class="kpi">
+    <span class="kpi-value" id="total-employees">0</span>
+    <span class="kpi-label">Total Employees</span>
+    <span class="info-tooltip" title="Number of employees in the selected department.">ℹ️</span>
+  </div>
+
+  <div class="kpi">
+    <span class="kpi-value" id="avg-satisfaction">0</span>
+    <span class="kpi-label">Avg Satisfaction</span>
+    <span class="info-tooltip" title="Average employee satisfaction score (1–10).">ℹ️</span>
+  </div>
+
+  <div class="kpi">
+    <span class="kpi-value" id="training-rate">0%</span> <!-- fixed ID -->
+    <span class="kpi-label">Training Completion</span>
+    <span class="info-tooltip" title="Percentage of employees who completed required training.">ℹ️</span>
+  </div>
+
+  <div class="kpi">
+    <span class="kpi-value" id="avg-absenteeism">0</span>
+    <span class="kpi-label">Avg Absenteeism (days)</span>
+    <span class="info-tooltip" title="Average days absent per employee.">ℹ️</span>
+  </div>
+</section>
+
+  <!-- SCRIPT -->
+  <script src="scripts.js"></script>
+
+</body>
+</html>

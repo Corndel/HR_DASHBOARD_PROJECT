@@ -1,0 +1,7 @@
+training_id,employee_id,training_name,mandatory,completion_status,completion_date
+T001,E001,Data Protection,Yes,Completed,2023-05-20
+T002,E002,Financial Compliance,Yes,Completed,
+T003,E003,Diversity Training,Yes,Not completed,
+T004,E004,Health & Safety,Yes,Completed,2022-09-15
+T005,E005,Cloud Fundamentals,No,Completed,2024-01-12
+T006,E006,Security Awareness,Yes,Not completed,
