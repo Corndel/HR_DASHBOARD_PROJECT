@@ -1,200 +1,183 @@
-// Realistic total employee counts by department
-const departmentEmployeeCounts = {
-  IT: 30,
+// Scaled headcount (realistic organisation)
+const headcount = {
+  IT: 35,
   Finance: 25,
-  HR: 15,
-  Operations: 20,
-  Sales: 30,
+  HR: 20,
+  Operations: 20
 };
 
-// Realistic training completion counts per department
-const trainingCompletionCounts = {
-  IT: { completed: 25, notCompleted: 5 },
-  Finance: { completed: 20, notCompleted: 5 },
-  HR: { completed: 10, notCompleted: 5 },
-  Operations: { completed: 18, notCompleted: 2 },
-  Sales: { completed: 27, notCompleted: 3 },
+// KPI ratios per department
+const kpisByDept = {
+  All: { satisfaction: 7.17, training: 66.67, absence: 2.75 },
+  IT: { satisfaction: 7.5, training: 70, absence: 3 },
+  Finance: { satisfaction: 6.9, training: 65, absence: 2.5 },
+  HR: { satisfaction: 7.0, training: 60, absence: 2.2 },
+  Operations: { satisfaction: 7.2, training: 67, absence: 3.1 },
 };
 
-// Sample employee dataset for averages
-const employees = [
-  { id: 'E001', department: 'IT', satisfaction: 8 },
-  { id: 'E002', department: 'Finance', satisfaction: 7 },
-  { id: 'E003', department: 'HR', satisfaction: 6 },
-  { id: 'E004', department: 'Operations', satisfaction: 7 },
-  { id: 'E005', department: 'Sales', satisfaction: 9 },
-  { id: 'E006', department: 'IT', satisfaction: 7 },
-];
-
-// Sample absenteeism data by employee id
-const absenteeismData = {
-  'E001': 1,
-  'E002': 3,
-  'E003': 0,
-  'E004': 2,
-  'E005': 4,
-  'E006': 1,
+// Performance data
+const performanceByDept = {
+  All: { Excellent: 30, Good: 45, Average: 20, Poor: 5 },
+  IT: { Excellent: 15, Good: 10, Average: 7, Poor: 3 },
+  Finance: { Excellent: 7, Good: 10, Average: 6, Poor: 2 },
+  HR: { Excellent: 5, Good: 9, Average: 4, Poor: 2 },
+  Operations: { Excellent: 6, Good: 9, Average: 3, Poor: 2 }
 };
 
-// Function to update KPI text by id
-function updateKPI(id, value, suffix = "") {
-  const el = document.getElementById(id);
-  if (el) el.innerText = value + suffix;
+// Employment type data
+const employmentByDept = {
+  All: { "Full-Time": 70, "Part-Time": 20, "Contractor": 10 },
+  IT: { "Full-Time": 25, "Part-Time": 5, "Contractor": 5 },
+  Finance: { "Full-Time": 20, "Part-Time": 5, "Contractor": 0 },
+  HR: { "Full-Time": 15, "Part-Time": 5, "Contractor": 0 },
+  Operations: { "Full-Time": 10, "Part-Time": 5, "Contractor": 5 },
+};
+
+
+
+// Gender distribution data
+const genderByDept = {
+  All: { Male: 55, Female: 45 },
+  IT: { Male: 25, Female: 10 },
+  Finance: { Male: 12, Female: 13 },
+  HR: { Male: 6, Female: 14 },
+  Operations: { Male: 12, Female: 8 }
+};
+
+// Chart descriptions
+const trainingDescriptions = {
+  All: "Shows number of employees who completed mandatory training.",
+  IT: "Training completion for IT employees.",
+  Finance: "Training completion for Finance employees.",
+  HR: "Training completion for HR employees.",
+  Operations: "Training completion for Operations employees."
+};
+
+const performanceDescriptions = {
+  All: "Employee performance ratings across all departments.",
+  IT: "Performance ratings for IT department.",
+  Finance: "Performance ratings for Finance department.",
+  HR: "Performance ratings for HR department.",
+  Operations: "Performance ratings for Operations department."
+};
+
+let charts = {};
+
+// KPI updater
+function updateKPIs(dept) {
+  const total =
+    dept === "All"
+      ? Object.values(headcount).reduce((a, b) => a + b, 0)
+      : headcount[dept];
+
+  const current = kpisByDept[dept] || kpisByDept.All;
+
+  document.getElementById("kpi-headcount").innerText = total;
+  document.getElementById("kpi-satisfaction").innerText = current.satisfaction.toFixed(2);
+  document.getElementById("kpi-training").innerText = current.training.toFixed(0) + "%";
+  document.getElementById("kpi-absence").innerText = current.absence.toFixed(1);
 }
 
-// Calculate KPIs
-function calculateKPIs(department) {
-  let filteredEmployees;
-
-  if (department === 'All') {
-    filteredEmployees = employees;
-  } else {
-    filteredEmployees = employees.filter(emp => emp.department === department);
-  }
-
-  // Total employees from realistic counts
-  const totalEmployees = department === 'All'
-    ? Object.values(departmentEmployeeCounts).reduce((a, b) => a + b, 0)
-    : (departmentEmployeeCounts[department] || 0);
-
-  // Average satisfaction from sample data
-  const avgSatisfaction = filteredEmployees.length > 0
-    ? filteredEmployees.reduce((sum, emp) => sum + emp.satisfaction, 0) / filteredEmployees.length
-    : 0;
-
-  // Training completion percent from realistic data
-  const trainingCounts = department === 'All'
-    ? Object.values(trainingCompletionCounts).reduce(
-        (acc, cur) => {
-          acc.completed += cur.completed;
-          acc.notCompleted += cur.notCompleted;
-          return acc;
-        },
-        { completed: 0, notCompleted: 0 }
-      )
-    : (trainingCompletionCounts[department] || { completed: 0, notCompleted: 0 });
-
-  const totalTrainings = trainingCounts.completed + trainingCounts.notCompleted;
-  const trainingCompletion = totalTrainings > 0 ? (trainingCounts.completed / totalTrainings) * 100 : 0;
-
-  // Average absenteeism from sample data
-  const totalAbsences = filteredEmployees.reduce((sum, emp) => sum + (absenteeismData[emp.id] || 0), 0);
-  const avgAbsenteeism = filteredEmployees.length > 0 ? totalAbsences / filteredEmployees.length : 0;
-
-  return { totalEmployees, avgSatisfaction, trainingCompletion, avgAbsenteeism };
+// Performance risk helper
+function getRiskData(dept) {
+  const perf = performanceByDept[dept] || performanceByDept.All;
+  return [
+    perf.Excellent + perf.Good,
+    perf.Average + perf.Poor
+  ];
 }
 
-// Chart variables
-let employeeDeptChart, trainingCompletionChart;
-
-// Get department employee counts for bar chart
-function getDepartmentChartData(selectedDept) {
-  const departments = ['IT', 'Finance', 'HR', 'Operations', 'Sales'];
-
-  if (selectedDept === 'All') {
-    return departments.map(dep => departmentEmployeeCounts[dep] || 0);
-  }
-
-  return departments.map(dep => (dep === selectedDept ? departmentEmployeeCounts[dep] || 0 : 0));
-}
-
-// Get training completion data for pie chart
-function getTrainingChartData(selectedDept) {
-  if (selectedDept === 'All') {
-    let totalCompleted = 0;
-    let totalNotCompleted = 0;
-    for (const dep in trainingCompletionCounts) {
-      totalCompleted += trainingCompletionCounts[dep].completed;
-      totalNotCompleted += trainingCompletionCounts[dep].notCompleted;
-    }
-    return [totalCompleted, totalNotCompleted];
-  }
-
-  if (trainingCompletionCounts[selectedDept]) {
-    return [
-      trainingCompletionCounts[selectedDept].completed,
-      trainingCompletionCounts[selectedDept].notCompleted,
-    ];
-  }
-
-  return [0, 0];
-}
-
-// Initialize charts
+// Init charts
 function initCharts() {
-  const ctxDept = document.getElementById('employee-department-chart').getContext('2d');
-  employeeDeptChart = new Chart(ctxDept, {
-    type: 'bar',
-    data: {
-      labels: ['IT', 'Finance', 'HR', 'Operations', 'Sales'],
-      datasets: [{
-        label: 'Employees',
-        data: getDepartmentChartData('All'),
-        backgroundColor: 'rgba(0, 122, 204, 0.7)',
-      }],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        title: { display: true, text: 'Employee Count by Department' },
-      },
-      scales: {
-        y: { beginAtZero: true, ticks: { stepSize: 5 } },
-      },
-    },
-  });
 
-  const ctxTrain = document.getElementById('training-completion-chart').getContext('2d');
-  trainingCompletionChart = new Chart(ctxTrain, {
-    type: 'pie',
-    data: {
-      labels: ['Completed', 'Not Completed'],
-      datasets: [{
-        label: 'Training',
-        data: getTrainingChartData('All'),
-        backgroundColor: ['#007acc', '#cccccc'],
-      }],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: { display: true, text: 'Training Completion Status' },
-      },
-    },
-  });
-}
+ // Gender distribution 
+const genderChart = document.getElementById("genderChart");
 
-// Update charts
-function updateCharts(selectedDept) {
-  employeeDeptChart.data.datasets[0].data = getDepartmentChartData(selectedDept);
-  employeeDeptChart.update();
-
-  trainingCompletionChart.data.datasets[0].data = getTrainingChartData(selectedDept);
-  trainingCompletionChart.update();
-}
-
-// Update dashboard KPIs and charts
-function updateDashboard(department) {
-  const kpis = calculateKPIs(department);
-
-updateKPI('total-employees', kpis.totalEmployees);
-updateKPI('avg-satisfaction', kpis.avgSatisfaction.toFixed(1));
-updateKPI('training-rate', kpis.trainingCompletion.toFixed(0), '%');  // fixed ID here
-updateKPI('avg-absenteeism', kpis.avgAbsenteeism.toFixed(1));
-
-
-  updateCharts(department);
-}
-
-// Department filter event listener
-const departmentFilter = document.getElementById('department-filter');
-departmentFilter.addEventListener('change', () => {
-  updateDashboard(departmentFilter.value);
+charts.gender = new Chart(genderChart, {
+  type: "bar",
+  data: {
+    labels: ["Male", "Female"],
+    datasets: [{
+      data: Object.values(genderByDept.All),
+      backgroundColor: ["#0a6ed1", "#f39c12"]
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true }
+    }
+  }
 });
 
-// Initialize everything on page load
-window.onload = function () {
+
+
+  charts.training = new Chart(trainingChart, {
+    type: "doughnut",
+    data: {
+      labels: ["Completed", "Not Completed"],
+      datasets: [{
+        data: [kpisByDept.All.training, 100 - kpisByDept.All.training],
+        backgroundColor: ["#0a6ed1", "#d0d0d0"]
+      }]
+    }
+  });
+
+  charts.performance = new Chart(performanceChart, {
+    type: "bar",
+    data: {
+      labels: Object.keys(performanceByDept.All),
+      datasets: [{
+        data: Object.values(performanceByDept.All),
+        backgroundColor: "#2ecc71"
+      }]
+    },
+    options: { plugins: { legend: { display: false } } }
+  });
+
+  charts.employment = new Chart(employmentChart, {
+    type: "pie",
+    data: {
+      labels: Object.keys(employmentByDept.All),
+      datasets: [{
+        data: Object.values(employmentByDept.All)
+      }]
+    }
+  });
+}
+
+// Filter handler
+document.getElementById("departmentFilter").addEventListener("change", e => {
+  const dept = e.target.value;
+
+  updateKPIs(dept);
+const genderData = genderByDept[dept] || genderByDept.All;
+charts.gender.data.datasets[0].data = Object.values(genderData);
+charts.gender.update();
+
+  const trainingVal = (kpisByDept[dept] || kpisByDept.All).training;
+  charts.training.data.datasets[0].data = [trainingVal, 100 - trainingVal];
+  charts.training.update();
+
+  const perf = performanceByDept[dept] || performanceByDept.All;
+  charts.performance.data.datasets[0].data = Object.values(perf);
+  charts.performance.update();
+
+  const emp = employmentByDept[dept] || employmentByDept.All;
+  charts.employment.data.datasets[0].data = Object.values(emp);
+  charts.employment.update();
+
+  document.getElementById("trainingChartDesc").innerText =
+    trainingDescriptions[dept] || trainingDescriptions.All;
+
+  document.getElementById("performanceChartDesc").innerText =
+    performanceDescriptions[dept] || performanceDescriptions.All;
+});
+
+// Load
+window.onload = () => {
   initCharts();
-  updateDashboard('All');
+  updateKPIs("All");
+  document.getElementById("trainingChartDesc").innerText = trainingDescriptions.All;
+  document.getElementById("performanceChartDesc").innerText = performanceDescriptions.All;
 };
