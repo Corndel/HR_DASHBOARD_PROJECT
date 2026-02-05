@@ -1,109 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <!-- page settings -->
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HR Analytics Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SAP HR Analytics Dashboard</title>
+  <link rel="stylesheet" href="styles.css"/>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
 
-  <!-- Chart.js -->
+  <!-- Chart.js library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <h1>HR Analytics Dashboard</h1>
-    <p>Overview of workforce metrics and training performance</p>
-  </header>
 
-  <!-- FILTERS -->
-  <section class="filters">
-    <label for="department-filter">Department:</label>
-    <select id="department-filter">
-      <option value="All">All</option>
-      <option value="IT">IT</option>
-      <option value="Finance">Finance</option>
-      <option value="HR">HR</option>
-      <option value="Operations">Operations</option>
-      <option value="Sales">Sales</option>
-    </select>
-  </section>
-
-  <!-- KPI SECTION -->
-  <section id="kpis">
-    <div class="kpi">
-      <span class="kpi-value" id="total-employees">0</span>
-      <span class="kpi-label">Total Employees</span>
-      <span class="info-tooltip" title="Number of employees in the selected department.">ℹ️</span>
-    </div>
-
-    <div class="kpi">
-      <span class="kpi-value" id="avg-satisfaction">0</span>
-      <span class="kpi-label">Avg Satisfaction</span>
-      <span class="info-tooltip" title="Average employee satisfaction score (1–10).">ℹ️</span>
-    </div>
-
-    <div class="kpi">
-      <span class="kpi-value" id="training-rate">0%</span>
-      <span class="kpi-label">Training Completion</span>
-      <span class="info-tooltip" title="Percentage of employees who completed required training.">ℹ️</span>
-    </div>
+  <!-- dashboard header -->
+<header class="header">
+  <h1>SAP HR Analytics Dashboard</h1>
+  <p>Workforce, wellbeing and compliance overview</p>
+</header>
 
 
+<!-- Department dropdown -->
+<section class="controls">
+  <label>Department:</label>
 
+  <!-- Dropdown to select department -->
+  <select id="departmentFilter">
+    <option value="All">All</option>
+    <option value="IT">IT</option>
+    <option value="Finance">Finance</option>
+    <option value="HR">HR</option>
+    <option value="Operations">Operations</option>
+  </select>
+</section>
 
-
-  </section>
-
-  <!-- CHARTS -->
-  <section class="charts">
-
-    <div class="chart-container">
-      <h3>Employees by Department</h3>
-      <canvas id="employee-department-chart"></canvas>
-    </div>
-
-    <div class="chart-container">
-      <h3>Training Completion Status</h3>
-      <canvas id="training-completion-chart"></canvas>
-    </div>
-
-  </section>
-
-
-
-  <section id="kpis">
+<!-- 
+KPI section -->
+<section class="kpis">
   <div class="kpi">
-    <span class="kpi-value" id="total-employees">0</span>
-    <span class="kpi-label">Total Employees</span>
-    <span class="info-tooltip" title="Number of employees in the selected department.">ℹ️</span>
+    <h2 id="kpi-headcount">0</h2>
+    <p>Total Employees</p>
   </div>
-
   <div class="kpi">
-    <span class="kpi-value" id="avg-satisfaction">0</span>
-    <span class="kpi-label">Avg Satisfaction</span>
-    <span class="info-tooltip" title="Average employee satisfaction score (1–10).">ℹ️</span>
+    <h2 id="kpi-satisfaction">0</h2>
+    <p>Avg Satisfaction</p>
   </div>
-
   <div class="kpi">
-    <span class="kpi-value" id="training-rate">0%</span> <!-- fixed ID -->
-    <span class="kpi-label">Training Completion</span>
-    <span class="info-tooltip" title="Percentage of employees who completed required training.">ℹ️</span>
+    <h2 id="kpi-training">0%</h2>
+    <p>Training Completion</p>
   </div>
-
   <div class="kpi">
-    <span class="kpi-value" id="avg-absenteeism">0</span>
-    <span class="kpi-label">Avg Absenteeism (days)</span>
-    <span class="info-tooltip" title="Average days absent per employee.">ℹ️</span>
+    <h2 id="kpi-absence">0</h2>
+    <p>Avg Absence Days</p>
   </div>
 </section>
 
-  <!-- SCRIPT -->
-  <script src="scripts.js"></script>
+<section class="charts">
 
+ 
+<div class="chart-card">
+  <canvas id="genderChart"></canvas>
+  <p class="chart-desc">
+    Shows gender distribution within the selected department to support diversity monitoring.
+  </p>
+</div>
+
+
+  </div>
+
+  <div class="chart-card">
+    <canvas id="trainingChart"></canvas>
+    <p class="chart-desc" id="trainingChartDesc">
+      Shows number of employees who completed mandatory training.
+    </p>
+  </div>
+
+  <div class="chart-card">
+    <canvas id="performanceChart"></canvas>
+    <p class="chart-desc" id="performanceChartDesc">
+      Employee performance ratings across all departments.
+    </p>
+  </div>
+
+  <div class="chart-card">
+    <canvas id="employmentChart"></canvas>
+    <p class="chart-desc">
+      Shows number of employees by employment type.
+    </p>
+  </div>
+
+</section>
+
+<script src="scripts.js"></script>
 </body>
 </html>
