@@ -37,13 +37,10 @@ kpis = {
     "training_completion_rate": training_completion_rate,
     "absence_rate": absence_rate
 }
-
 # Save KPIs as JSON file for dashboard consumption
 with open(OUTPUT_DIR / "kpis.json", "w") as f:
     json.dump(kpis, f)
-
-# --- Prepare Data for Visualization ---
-
+    
 # Calculate headcount by department for dashboard charting
 headcount_by_dept = employees.groupby('department').size().reset_index(name='count')
 
